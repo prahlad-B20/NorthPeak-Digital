@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NorthPeak Digital — Shopify Development Agency</title>
+<meta name="description" content="NorthPeak Digital builds fast, custom Shopify storefronts and migrations for e-commerce brands ready to climb.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17212B;
+    --paper:#EDEBE3;
+    --paper-dim:#E2DFD3;
+    --line:#B9B29E;
+    --pine:#2B4C43;
+    --brass:#B8863B;
+    --brass-dark:#8F6A2C;
+    --white:#FAF9F5;
+    --danger:#9C3B2E;
+    --radius:2px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.04em;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brass-dark);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;height:1px;
+    background:var(--brass-dark);
+    display:inline-block;
+  }
+  section{padding:96px 0;position:relative;}
+  @media (max-width:768px){ section{padding:64px 0;} }
+
+  /* ---------- FOCUS / A11Y ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:2px solid var(--brass-dark);
+    outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(237,235,227,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Space Grotesk';font-weight:700;font-size:18px;
+    text-decoration:none;
+  }
+  .logo svg{width:22px;height:22px;flex:none;}
+  nav ul{
+    list-style:none;display:flex;gap:32px;margin:0;padding:0;
+  }
+  nav ul a{
+    text-decoration:none;font-size:14px;font-weight:500;
+    color:var(--ink);opacity:0.8;
+    padding:4px 0;border-bottom:1px solid transparent;
+    transition:border-color .15s ease, opacity .15s ease;
+  }
+  nav ul a:hover{opacity:1;border-color:var(--brass-dark);}
+  .nav-cta{
+    font-size:13px;font-weight:600;
+    padding:10px 18px;
+    background:var(--ink);color:var(--white);
+    text-decoration:none;border-radius:var(--radius);
+    font-family:'IBM Plex Mono';
+    letter-spacing:0.03em;
+  }
+  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:var(--radius);padding:8px 10px;}
+  .menu-btn span{display:block;width:20px;height:2px;background:var(--ink);margin:4px 0;}
+  @media (max-width:768px){
+    nav ul{display:none;}
+    .menu-btn{display:block;}
+    .nav-cta{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top:120px;padding-bottom:70px;
+    overflow:hidden;
+  }
+  .contour-bg{
+    position:absolute;inset:0;z-index:0;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative;z-index:1;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:end;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5.4vw, 68px);
+    line-height:1.02;
+    margin-top:18px;
+    max-width:14ch;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--pine);
+    position:relative;
+  }
+  .hero p.lede{
+    font-size:18px;max-width:46ch;margin-top:22px;color:#3A4450;
+  }
+  .hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 22px;font-size:14px;font-weight:600;
+    border-radius:var(--radius);text-decoration:none;
+    font-family:'IBM Plex Mono';letter-spacing:0.02em;
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--brass-dark);color:var(--white);}
+  .btn-primary:hover{box-shadow:0 6px 0 0 var(--ink);}
+  .btn-ghost{background:transparent;border-color:var(--ink);color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink);color:var(--white);}
+
+  .elevation-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 22px 8px;
+    box-shadow:0 12px 30px -18px rgba(23,33,43,0.35);
+  }
+  .elevation-card .mono{font-size:11px;color:var(--brass-dark);}
+  .elevation-card h3{font-size:14px;margin:6px 0 14px;font-weight:600;}
+  .elevation-chart{width:100%;height:120px;}
+  .elevation-chart path.line{
+    fill:none;stroke:var(--pine);stroke-width:2;
+    stroke-dasharray:600;stroke-dashoffset:600;
+    animation:draw 2.4s ease forwards 0.3s;
+  }
+  .elevation-chart path.fill{fill:url(#peakFill);opacity:0;animation:fadein 1s ease forwards 1.6s;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes fadein{to{opacity:1;}}
+  .elevation-legend{
+    display:flex;justify-content:space-between;
+    font-size:11px;color:#6B7280;padding:8px 0 14px;
+    border-top:1px dashed var(--line);margin-top:6px;
+  }
+
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- MARQUEE STRIP ---------- */
+  .strip{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+  }
+  .strip .wrap{
+    display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;
+    font-family:'IBM Plex Mono';font-size:12px;color:#5C6570;letter-spacing:0.04em;
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(28px,3.6vw,42px);margin-top:14px;}
+  .section-head p{color:#4B5563;margin-top:14px;font-size:16px;}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid;grid-template-columns:repeat(3, 1fr);gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:900px){ .services-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .services-grid{grid-template-columns:1fr;} }
+  .service{
+    background:var(--paper);
+    padding:32px 28px;
+    position:relative;
+    transition:background .2s ease;
+  }
+  .service:hover{background:var(--white);}
+  .service .wp{
+    font-family:'IBM Plex Mono';font-size:11px;color:var(--brass-dark);
+    display:block;margin-bottom:16px;
+  }
+  .service h3{font-size:19px;margin-bottom:10px;}
+  .service p{margin:0;color:#4B5563;font-size:14.5px;}
+
+  /* ---------- TRAIL LOG (testimonials) ---------- */
+  .log{
+    background:var(--ink);color:var(--paper);
+    padding:90px 0;
+  }
+  .log .section-head p{color:#B7BEC7;}
+  .log .eyebrow{color:var(--brass);}
+  .log .eyebrow::before{background:var(--brass);}
+  .log-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2A3542;}
+  @media (max-width:900px){ .log-grid{grid-template-columns:1fr;} }
+  .entry{background:var(--ink);padding:30px 26px;}
+  .entry .stamp{font-family:'IBM Plex Mono';font-size:11px;color:var(--brass);margin-bottom:16px;display:block;}
+  .entry blockquote{margin:0 0 20px;font-size:16px;line-height:1.6;font-weight:400;}
+  .entry .who{font-size:13px;color:#9AA4B0;}
+  .entry .who strong{color:var(--paper);}
+
+  /* ---------- PRICING ---------- */
+  .pricing-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  @media (max-width:900px){ .pricing-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;} }
+  .tier{
+    border:1px solid var(--line);
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:32px 28px;
+    display:flex;flex-direction:column;
+  }
+  .tier.featured{
+    border-color:var(--pine);
+    box-shadow:0 18px 40px -22px rgba(43,76,67,0.55);
+    position:relative;
+  }
+  .tier.featured::before{
+    content:"MOST BOOKED";
+    position:absolute;top:-11px;left:28px;
+    background:var(--pine);color:var(--white);
+    font-family:'IBM Plex Mono';font-size:10px;letter-spacing:0.08em;
+    padding:4px 10px;border-radius:2px;
+  }
+  .tier .badge{font-family:'IBM Plex Mono';font-size:11px;color:var(--brass-dark);}
+  .tier h3{font-size:24px;margin:10px 0 4px;}
+  .tier .price{font-family:'Space Grotesk';font-size:34px;font-weight:700;margin:14px 0 6px;}
+  .tier .price span{font-size:14px;font-weight:500;color:#6B7280;font-family:'IBM Plex Sans';}
+  .tier ul{list-style:none;margin:20px 0 28px;padding:0;flex:1;}
+  .tier li{
+    padding:9px 0;border-top:1px solid var(--paper-dim);
+    font-size:14.5px;color:#3A4450;
+    display:flex;gap:10px;
+  }
+  .tier li::before{content:"—";color:var(--brass-dark);flex:none;}
+  .tier .btn{width:100%;justify-content:center;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--paper-dim);}
+  .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:start;}
+  @media (max-width:900px){ .contact-grid{grid-template-columns:1fr;} }
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block;font-family:'IBM Plex Mono';font-size:11px;
+    letter-spacing:0.05em;color:#4B5563;margin-bottom:8px;text-transform:uppercase;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;padding:13px 14px;
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--white);font-family:'IBM Plex Sans';font-size:14.5px;
+    color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:110px;}
+  .field .error{
+    display:none;color:var(--danger);font-size:12.5px;margin-top:6px;font-family:'IBM Plex Mono';
+  }
+  .field.invalid input, .field.invalid select, .field.invalid textarea{border-color:var(--danger);}
+  .field.invalid .error{display:block;}
+  .form-note{font-size:12.5px;color:#6B7280;margin-top:6px;}
+  #formStatus{
+    margin-top:16px;font-family:'IBM Plex Mono';font-size:13px;
+    padding:12px 14px;border-radius:var(--radius);display:none;
+  }
+  #formStatus.show{display:block;}
+  #formStatus.ok{background:#E4EEE7;color:var(--pine);border:1px solid #BFD6C6;}
+
+  .coords-list{list-style:none;margin:0;padding:0;}
+  .coords-list li{
+    display:flex;justify-content:space-between;
+    padding:14px 0;border-top:1px dashed var(--line);
+    font-family:'IBM Plex Mono';font-size:13px;color:#4B5563;
+  }
+  .coords-list li:last-child{border-bottom:1px dashed var(--line);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);color:#9AA4B0;
+    padding:48px 0 26px;font-size:13px;
+  }
+  .footer-top{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;
+    padding-bottom:26px;border-bottom:1px solid #2A3542;margin-bottom:22px;
+  }
+  .footer-top .logo{color:var(--paper);}
+  footer a{color:#9AA4B0;text-decoration:none;}
+  footer a:hover{color:var(--brass);}
+  .credit{
+    text-align:center;font-family:'IBM Plex Mono';font-size:11.5px;color:#6B7280;
+  }
+  .credit a{color:var(--brass);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 24 24"><path d="M2 20L9 7l3.5 6L16 9l6 11H2z" fill="none" stroke="#B8863B" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      NorthPeak Digital
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#log">Trail Log</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="nav-cta">START A BUILD</a>
+    <button class="menu-btn" aria-label="Open menu" onclick="document.getElementById('mnav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div id="mnav" style="display:none;" class="wrap">
+    <ul style="list-style:none;padding:16px 0;margin:0;display:flex;flex-direction:column;gap:14px;">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#log">Trail Log</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact" style="font-weight:600;">Start a build →</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  document.querySelector('.menu-btn').addEventListener('click', ()=>{
+    const m = document.getElementById('mnav');
+    m.style.display = m.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+
+<main id="top">
+  <section class="hero">
+    <svg class="contour-bg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke="#2B4C43" stroke-width="1">
+        <path d="M-50 620 Q 200 520 400 600 T 900 560 T 1300 620" opacity="0.25"/>
+        <path d="M-50 560 Q 220 460 420 540 T 920 500 T 1300 560" opacity="0.3"/>
+        <path d="M-50 500 Q 240 400 440 480 T 940 440 T 1300 500" opacity="0.35"/>
+        <path d="M-50 440 Q 260 340 460 420 T 960 380 T 1300 440" opacity="0.4"/>
+        <path d="M-50 380 Q 280 280 480 360 T 980 320 T 1300 380" opacity="0.45"/>
+        <path d="M-50 320 Q 300 220 500 300 T 1000 260 T 1300 320" opacity="0.5"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">47.9°N · SHOPIFY DEVELOPMENT AGENCY</div>
+          <h1>We build the ground <em>brands stand on</em> to keep climbing.</h1>
+          <p class="lede">NorthPeak Digital designs and ships custom Shopify storefronts, migrations, and checkout builds for e-commerce brands that have outgrown their theme.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Plan the route →</a>
+            <a href="#services" class="btn btn-ghost">See what we build</a>
+          </div>
+        </div>
+        <div class="elevation-card">
+          <span class="mono">LIVE READ · CONVERSION ELEVATION</span>
+          <h3>Client average, 90 days post-launch</h3>
+          <svg class="elevation-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="peakFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2B4C43" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#2B4C43" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="fill" d="M0,100 L40,92 L80,95 L120,70 L160,78 L200,45 L240,55 L280,28 L320,34 L360,10 L400,18 L400,120 L0,120 Z"/>
+            <path class="line" d="M0,100 L40,92 L80,95 L120,70 L160,78 L200,45 L240,55 L280,28 L320,34 L360,10 L400,18"/>
+          </svg>
+          <div class="elevation-legend">
+            <span>WEEK 1</span><span>WEEK 6</span><span>WEEK 13</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <span>ROUTE-01 · THEME BUILDS</span>
+      <span>ROUTE-02 · MIGRATIONS</span>
+      <span>ROUTE-03 · CUSTOM LIQUID</span>
+      <span>ROUTE-04 · PERFORMANCE</span>
+      <span>ROUTE-05 · US / UK / AU CLIENTS</span>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">WAYPOINTS</div>
+        <h2>Six ways we get a store off the flats</h2>
+        <p>Every engagement starts with an audit, not a template. Pick what your store needs, or let us route the whole climb.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service"><span class="wp mono">WP-01</span><h3>Storefront Builds</h3><p>Custom Shopify themes built up from Dawn — no bloated page-builder apps slowing down your checkout.</p></div>
+        <div class="service"><span class="wp mono">WP-02</span><h3>Migrations</h3><p>Move off Wix, Squarespace, or legacy Magento without losing your rankings, redirects, or a week of revenue.</p></div>
+        <div class="service"><span class="wp mono">WP-03</span><h3>Custom Liquid Sections</h3><p>Sections built to spec with real customizer schema, so your team edits copy and images without calling a developer.</p></div>
+        <div class="service"><span class="wp mono">WP-04</span><h3>Performance Passes</h3><p>Lighthouse-driven speed audits that trace slow load time back to the actual app or asset causing it.</p></div>
+        <div class="service"><span class="wp mono">WP-05</span><h3>Checkout &amp; Loyalty</h3><p>Loyalty programs, subscriptions, and checkout customization scoped against what Shopify's checkout actually allows.</p></div>
+        <div class="service"><span class="wp mono">WP-06</span><h3>Ongoing Support</h3><p>A standing line to the developer who built your store — not a fresh ticket number every time you write in.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="log" class="log">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">TRAIL LOG</div>
+        <h2>Notes from the last three climbs</h2>
+        <p>What clients wrote back after launch — kept as they sent them.</p>
+      </div>
+      <div class="log-grid">
+        <div class="entry">
+          <span class="stamp mono">ENTRY · DAY 14 POST-LAUNCH</span>
+          <blockquote>"The migration from Magento took four days end to end and our top ten pages kept their rankings. We didn't lose a single week of orders."</blockquote>
+          <p class="who"><strong>Maren Ostlund</strong> — Founder, Fjeld Outdoor</p>
+        </div>
+        <div class="entry">
+          <span class="stamp mono">ENTRY · DAY 3 POST-LAUNCH</span>
+          <blockquote>"They handed us a Liquid section we can actually edit ourselves. First time an agency has built something our marketing team doesn't have to wait on."</blockquote>
+          <p class="who"><strong>Devon Ruiz</strong> — Ops Lead, Coldpress Goods</p>
+        </div>
+        <div class="entry">
+          <span class="stamp mono">ENTRY · DAY 45 POST-LAUNCH</span>
+          <blockquote>"Our Lighthouse performance score went from 41 to 96. Mobile conversion is up almost a third since the pass."</blockquote>
+          <p class="who"><strong>Priya Nair</strong> — DTC Manager, Harvest &amp; Co</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">BASECAMP TO SUMMIT</div>
+        <h2>Three ways to start the climb</h2>
+        <p>Fixed-scope builds for stores that know what they need, and a standing retainer for stores that don't want to ask twice.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="tier">
+          <span class="badge mono">TIER 01</span>
+          <h3>Basecamp</h3>
+          <div class="price">$2,400 <span>/ build</span></div>
+          <ul>
+            <li>Single custom Liquid section</li>
+            <li>Theme customizer schema included</li>
+            <li>1 round of revisions</li>
+            <li>5-day delivery</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Start here</a>
+        </div>
+        <div class="tier featured">
+          <span class="badge mono">TIER 02</span>
+          <h3>Ascent</h3>
+          <div class="price">$6,800 <span>/ project</span></div>
+          <ul>
+            <li>Full custom theme build on Dawn</li>
+            <li>Migration from your current platform</li>
+            <li>Performance pass to 90+ Lighthouse</li>
+            <li>2 weeks of post-launch support</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Start here</a>
+        </div>
+        <div class="tier">
+          <span class="badge mono">TIER 03</span>
+          <h3>Summit</h3>
+          <div class="price">$3,200 <span>/ month</span></div>
+          <ul>
+            <li>Ongoing dev retainer, no ticket queue</li>
+            <li>Checkout &amp; loyalty feature work</li>
+            <li>Monthly performance &amp; conversion review</li>
+            <li>Priority response within 1 business day</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Start here</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="eyebrow">SEND A SIGNAL</div>
+          <h2 style="font-size:clamp(26px,3.2vw,36px);margin-top:14px;">Tell us where you're stuck</h2>
+          <p style="color:#4B5563;margin-top:14px;max-width:38ch;">Send the details below and a developer — not a salesperson — replies within one business day.</p>
+          <ul class="coords-list" style="margin-top:32px;">
+            <li><span>RESPONSE TIME</span><span>&lt; 1 business day</span></li>
+            <li><span>TIME ZONES SERVED</span><span>US · UK · AU</span></li>
+            <li><span>CURRENT AVAILABILITY</span><span>2 slots, August</span></li>
+          </ul>
+        </div>
+        <form id="contactForm" novalidate>
+          <div class="field" id="f-name">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Full name">
+            <div class="error">Tell us your name — we don't reply to blanks.</div>
+          </div>
+          <div class="field" id="f-email">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@yourstore.com">
+            <div class="error">That email doesn't look complete — check it and try again.</div>
+          </div>
+          <div class="field" id="f-budget">
+            <label for="budget">Budget range</label>
+            <select id="budget" name="budget">
+              <option value="">Select a range</option>
+              <option value="under-3k">Under $3,000</option>
+              <option value="3k-8k">$3,000 – $8,000</option>
+              <option value="8k-20k">$8,000 – $20,000</option>
+              <option value="20k-plus">$20,000+</option>
+            </select>
+            <div class="error">Pick a range so we can scope this properly.</div>
+          </div>
+          <div class="field" id="f-message">
+            <label for="message">What are you building or fixing?</label>
+            <textarea id="message" name="message" placeholder="Current platform, timeline, and what's not working today."></textarea>
+            <div class="error">Give us at least a sentence to route your message correctly.</div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Send the signal →</button>
+          <div id="formStatus"></div>
+          <p class="form-note">No spam, no drip sequence — just a reply from whoever would build your store.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a href="#top" class="logo">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M2 20L9 7l3.5 6L16 9l6 11H2z" fill="none" stroke="#B8863B" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        NorthPeak Digital
+      </a>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;">
+        <a href="#services">Services</a>
+        <a href="#log">Trail Log</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="credit">
+      Built for Digital Heroes Training Task — <a href="https://digitalheroesco.com" target="_blank" rel="noopener">digitalheroesco.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+
+  function setError(fieldId, invalid){
+    const el = document.getElementById(fieldId);
+    el.classList.toggle('invalid', invalid);
+  }
+
+  function validEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let ok = true;
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const budget = document.getElementById('budget').value;
+    const message = document.getElementById('message').value.trim();
+
+    setError('f-name', name.length === 0); if(name.length === 0) ok = false;
+    setError('f-email', !validEmail(email)); if(!validEmail(email)) ok = false;
+    setError('f-budget', budget === ''); if(budget === '') ok = false;
+    setError('f-message', message.length < 5); if(message.length < 5) ok = false;
+
+    if(ok){
+      status.textContent = "Signal received — expect a reply within one business day.";
+      status.classList.add('show','ok');
+      form.reset();
+    } else {
+      status.classList.remove('show','ok');
+    }
+  });
+</script>
+
+</body>
+</html>
